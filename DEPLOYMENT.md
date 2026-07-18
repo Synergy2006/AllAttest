@@ -119,9 +119,12 @@ so the repo stays clean.)
 4. Fill the form:
    - **Subscription:** your subscription (usually only one).
    - **Resource group:** click "Create new" → name it `allattest-rg`.
-   - **Name:** pick something globally unique, e.g. `allattest-api-raj`.
-     ⚠️ WRITE THIS NAME DOWN — you need it 3 more times. Your API URL becomes
-     `https://allattest-api-raj.azurewebsites.net`.
+   - **Name:** e.g. `allattest`. ⚠️ WRITE THIS NAME DOWN — you need it again.
+     Azure adds a random string to your URL (e.g.
+     `allattest-a1b2c3d4.eastus-01.azurewebsites.net`) — that full address is
+     your **Default domain**, shown on the app's Overview page after creation.
+     You'll need BOTH: the short *name* for the deploy workflow, and the full
+     *Default domain* for linking Vercel.
    - **Publish:** Code
    - **Runtime stack:** Node 20 LTS
    - **Operating System:** Linux
@@ -135,7 +138,7 @@ so the repo stays clean.)
 
 1. On your Web App's page, look at the top toolbar and click
    **Download publish profile**. A file like
-   `allattest-api-raj.PublishSettings` downloads.
+   `allattest.PublishSettings` downloads.
    - **If the button is greyed out:** in the left menu go to
      **Settings → Configuration → General settings**, set
      **SCM Basic Auth Publishing Credentials** to **On**, click Save,
@@ -167,7 +170,7 @@ so the repo stays clean.)
    AZURE_WEBAPP_NAME: YOUR-AZURE-APP-NAME # <-- CHANGE THIS
    ```
    and replace `YOUR-AZURE-APP-NAME` with your real app name from Part 2a
-   (e.g. `allattest-api-raj`).
+   (e.g. `allattest` — the short NAME, not the full domain).
 4. Click **Commit changes** (green button) → **Commit changes** again.
 
 That commit triggers the deployment. Click the **Actions** tab to watch it —
@@ -176,10 +179,11 @@ with a green ✓.
 
 ### 3c. Verify the API is live
 
-Open this in your browser (with your app name):
+Open this in your browser — use YOUR full **Default domain** from the app's
+Overview page (it includes a random string):
 
 ```
-https://allattest-api-raj.azurewebsites.net/api/tenants
+https://allattest-XXXXXXXX.eastus-01.azurewebsites.net/api/tenants
 ```
 
 If you see `{"error":"Sign in required"}` — **that's success!** The API is
@@ -198,7 +202,12 @@ can take ~30 seconds on the free plan while the app wakes up.)
 1. On GitHub, open the file `client/vercel.json` and click the pencil to edit.
 2. Replace `YOUR-AZURE-APP-NAME` with your app name so it reads e.g.:
    ```json
-   "destination": "https://allattest-api-raj.azurewebsites.net/api/:path*"
+   "destination": "https://allattest-XXXXXXXX.eastus-01.azurewebsites.net/api/:path*"
+   ```
+   ⚠️ Use your FULL **Default domain** copied from the Azure Overview page —
+   including the random string and region. The short form without it will NOT
+   work with Azure’s new randomized hostnames.
+   ```json
    ```
 3. **Commit changes**.
 

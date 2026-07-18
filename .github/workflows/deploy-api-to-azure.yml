@@ -14,7 +14,7 @@ on:
   workflow_dispatch: {}
 
 env:
-  AZURE_WEBAPP_NAME: YOUR-AZURE-APP-NAME # <-- CHANGE THIS
+  AZURE_WEBAPP_NAME: allattest # <-- CHANGE THIS
 
 jobs:
   deploy:
