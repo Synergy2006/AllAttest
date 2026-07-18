@@ -1,0 +1,13 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+
+# runtime demo database (recreated by `npm run seed` / auto-seeded on boot)
+server/data/db.json
+
+# local env & logs
+.env
+*.log
+nohup.out
