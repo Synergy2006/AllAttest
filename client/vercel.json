@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://allattest-b2bvc8dhakcbh6h4.eastus-01.azurewebsites.net/api/:path*"
+      "destination": "https://allattest-dev-d3afeyfheagmbja6.eastus-01.azurewebsites.net/api/:path*"
     }
   ]
 }
