@@ -844,6 +844,8 @@ function Login({ onSignedIn }) {
             {busy ? "Signing in…" : "Sign in"}
           </button>
         </div>
+        {/* Demo logins exist only in dev/demo databases — never on the prod domain. */}
+        {!/(^|\.)allattest\.com$/.test(window.location.hostname) && (
         <div style={{ marginTop: 14, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, padding: "12px 16px" }}>
           <div style={{ fontFamily: C.mono, fontSize: 9.5, letterSpacing: "0.12em", color: C.navySoft, marginBottom: 7 }}>DEMO LOGINS (npm run seed)</div>
           {[
@@ -857,6 +859,7 @@ function Login({ onSignedIn }) {
             </div>
           ))}
         </div>
+        )}
       </div>
     </div>
   );

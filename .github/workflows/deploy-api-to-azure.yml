@@ -1,20 +1,22 @@
-# Deploys the AllAttest API (the server/ folder) to Azure App Service
-# on every push to main. Two one-time setup steps (see DEPLOYMENT.md):
-#   1. Change AZURE_WEBAPP_NAME below to YOUR web app's name.
-#   2. Add the AZURE_WEBAPP_PUBLISH_PROFILE secret in GitHub
-#      (Settings -> Secrets and variables -> Actions).
+# Deploys the AllAttest API (the server/ folder) to Azure App Service.
+#   prod branch -> allattest       (production, www.allattest.com)
+#   main branch -> allattest-dev   (dev)
+# Each environment has its own publish-profile secret in GitHub
+# (Settings -> Secrets and variables -> Actions):
+#   AZURE_WEBAPP_PUBLISH_PROFILE      (prod app)
+#   AZURE_WEBAPP_PUBLISH_PROFILE_DEV  (dev app)
 name: Deploy API to Azure
 
 on:
   push:
-    branches: [main]
+    branches: [main, prod]
     paths:
       - "server/**"
       - ".github/workflows/deploy-api-to-azure.yml"
   workflow_dispatch: {}
 
 env:
-  AZURE_WEBAPP_NAME: allattest # <-- CHANGE THIS
+  AZURE_WEBAPP_NAME: ${{ github.ref_name == 'prod' && 'allattest' || 'allattest-dev' }}
 
 jobs:
   deploy:
@@ -36,5 +38,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          publish-profile: ${{ github.ref_name == 'prod' && secrets.AZURE_WEBAPP_PUBLISH_PROFILE || secrets.AZURE_WEBAPP_PUBLISH_PROFILE_DEV }}
           package: server
