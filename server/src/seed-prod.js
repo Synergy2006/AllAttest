@@ -7,7 +7,7 @@ import { db } from "./store.js";
 import { FRAMEWORK_CATALOG } from "./tenants.js";
 import { createUser } from "./auth.js";
 
-db.replaceAll({ frameworks: FRAMEWORK_CATALOG, tenants: [], connectors: [], controls: [], evidence: [], activity: [], users: [], sessions: [], synclog: [] });
+db.replaceAll({ meta: { seedMode: "prod", seededAt: new Date().toISOString() }, frameworks: FRAMEWORK_CATALOG, tenants: [], connectors: [], controls: [], evidence: [], activity: [], users: [], sessions: [], synclog: [] });
 
 const email = process.env.ROOT_EMAIL || "root@allattest.com";
 const { password } = createUser({ email, name: "Root", password: process.env.ROOT_PASSWORD, role: "operator" });
